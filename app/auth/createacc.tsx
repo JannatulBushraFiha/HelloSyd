@@ -2,44 +2,50 @@ import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 
-export default function Profile() {
+export default function CreateAcount() {
+  const [UserName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
 
   return (
-    <View style={styles.container}>
-      <h1 style={styles.text}>LogIn/ SignUp</h1>
-      <Text
-        style={{ alignSelf: "flex-start", marginLeft: 390, marginBottom: 5 }}
-      >
-        Enter your email
-      </Text>
+    <View>
+      <h1>Create Account</h1>
+      <Text>Create UserName</Text>
+      <TextInput
+        style={styles.textbox}
+        placeholder="User Name"
+        value={UserName}
+        onChangeText={setUserName}
+      ></TextInput>
+
+      <Text>Enter your email</Text>
       <TextInput
         style={styles.textbox}
         placeholder="Email"
         value={email}
         onChangeText={setEmail}
-      />
-      <Text
-        style={{ alignSelf: "flex-start", marginLeft: 390, marginBottom: 5 }}
-      >
-        Enter your Password
-      </Text>
+      ></TextInput>
+
+      <Text>Create Password</Text>
       <TextInput
         style={styles.textbox}
-        placeholder="Password"
+        placeholder="Email"
         secureTextEntry
         value={password}
         onChangeText={setPassword}
-      />
-      <Pressable style={styles.login_button}> Login</Pressable>
-      <Text>
-        New to YourSydGuide?{" "}
-        <Pressable onPress={() => router.push("/auth/createacc")}>
-          <Text style={styles.create_acc_link}>Create New Account</Text>
-        </Pressable>
-      </Text>
+      ></TextInput>
+
+      <Text>Confirm Password</Text>
+      <TextInput
+        style={styles.textbox}
+        placeholder="re-type password"
+        secureTextEntry
+        value={password}
+        onChangeText={setPassword}
+      ></TextInput>
+
+      <Pressable style={styles.create_acc_button}>Create Account</Pressable>
     </View>
   );
 }
@@ -64,7 +70,7 @@ const styles = StyleSheet.create({
     alignContent: "center",
     marginBottom: 20, // ⭐ makes it long sideways
   },
-  login_button: {
+  create_acc_button: {
     backgroundColor: "skyblue",
     padding: 10,
     borderRadius: 5,
