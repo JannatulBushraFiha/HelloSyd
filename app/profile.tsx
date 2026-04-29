@@ -9,9 +9,9 @@ export default function Profile() {
 
   return (
     <View style={styles.container}>
-      <h1 style={styles.text}>LogIn/ SignUp</h1>
+      <Text style={styles.text}>LogIn/ SignUp</Text>
       <Text
-        style={{ alignSelf: "flex-start", marginLeft: 390, marginBottom: 5 }}
+        style={{ alignSelf: "flex-start", marginLeft: 500, marginBottom: 5 }}
       >
         Enter your email
       </Text>
@@ -22,7 +22,7 @@ export default function Profile() {
         onChangeText={setEmail}
       />
       <Text
-        style={{ alignSelf: "flex-start", marginLeft: 390, marginBottom: 5 }}
+        style={{ alignSelf: "flex-start", marginLeft: 500, marginBottom: 5 }}
       >
         Enter your Password
       </Text>
@@ -34,12 +34,10 @@ export default function Profile() {
         onChangeText={setPassword}
       />
       <Pressable style={styles.login_button}> Login</Pressable>
-      <Text>
-        New to YourSydGuide?{" "}
-        <Pressable onPress={() => router.push("/auth/createacc")}>
-          <Text style={styles.create_acc_link}>Create New Account</Text>
-        </Pressable>
-      </Text>
+      <Text>New to YourSydGuide?</Text>
+      <Pressable onPress={() => router.push("/auth/createacc")}>
+        <Text style={styles.create_acc_link}>Create New Account</Text>
+      </Pressable>
     </View>
   );
 }

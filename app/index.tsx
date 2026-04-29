@@ -1,23 +1,51 @@
-import { Link } from "expo-router";
-import { StyleSheet, Text, View } from "react-native";
+import { useRouter } from "expo-router";
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
+  const router = useRouter();
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>HelloSYD!</Text>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "rgb(93, 131, 181)" }}>
+      <View style={styles.container}>
+        <Text style={styles.title}>HelloSYD!</Text>
 
-      <Text style={styles.text}>Let's explore SYDNEY</Text>
+        <Text style={styles.subtitle}>Let's explore SYDNEY</Text>
 
-      <Link href="/profile" style={styles.button}>
-        <View>
+        <Pressable
+          style={styles.button}
+          onPress={() => router.push("/profile")}
+        >
           <Text style={styles.buttonText}>Continue with Email</Text>
+        </Pressable>
+
+        <View
+          style={{ flexDirection: "row", alignItems: "center", width: "90%" }}
+        >
+          <View
+            style={{
+              flex: 1,
+              height: 1,
+              backgroundColor: "rgba(255,255,255,0.4)",
+            }}
+          />
+          <Text style={{ marginHorizontal: 12, color: "white" }}>OR</Text>
+          <View
+            style={{
+              flex: 1,
+              height: 1,
+              backgroundColor: "rgba(255,255,255,0.4)",
+            }}
+          />
         </View>
-      </Link>
-      <Text style={{ marginBottom: 5 }}>OR</Text>
-      <Link href="/profile" style={styles.button}>
-        <Text style={styles.buttonText}>Continue with Google</Text>
-      </Link>
-    </View>
+
+        <Pressable
+          style={styles.button}
+          onPress={() => router.push("/profile")}
+        >
+          <Text style={styles.buttonText}>Continue with Google</Text>
+        </Pressable>
+      </View>
+    </SafeAreaView>
   );
 }
 
@@ -27,11 +55,16 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor: "rgb(93, 131, 181)",
+    paddingTop: 60,
   },
-  text: {
+  title: {
     color: "white",
-    fontSize: 60,
-    // textAlign: "left",
+    fontSize: 40,
+    marginBottom: 15,
+  },
+  subtitle: {
+    color: "white",
+    fontSize: 22,
     marginBottom: 15,
   },
 
@@ -40,7 +73,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 20,
     backgroundColor: "white",
-    width: "20%",
+    width: "90%",
     marginBottom: 10,
     alignItems: "center",
     justifyContent: "center",
