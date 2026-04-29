@@ -9,9 +9,13 @@ export default function CreateAcount() {
   const router = useRouter();
 
   return (
-    <View>
-      <h1>Create Account</h1>
-      <Text>Create UserName</Text>
+    <View style={styles.container}>
+      <Text>Create Account</Text>
+      <Text
+        style={{ alignSelf: "flex-start", marginLeft: 500, marginBottom: 5 }}
+      >
+        Create UserName
+      </Text>
       <TextInput
         style={styles.textbox}
         placeholder="User Name"
@@ -19,7 +23,11 @@ export default function CreateAcount() {
         onChangeText={setUserName}
       ></TextInput>
 
-      <Text>Enter your email</Text>
+      <Text
+        style={{ alignSelf: "flex-start", marginLeft: 500, marginBottom: 5 }}
+      >
+        Enter your email
+      </Text>
       <TextInput
         style={styles.textbox}
         placeholder="Email"
@@ -27,16 +35,24 @@ export default function CreateAcount() {
         onChangeText={setEmail}
       ></TextInput>
 
-      <Text>Create Password</Text>
+      <Text
+        style={{ alignSelf: "flex-start", marginLeft: 500, marginBottom: 5 }}
+      >
+        Create Password
+      </Text>
       <TextInput
         style={styles.textbox}
-        placeholder="Email"
+        placeholder="password"
         secureTextEntry
         value={password}
         onChangeText={setPassword}
       ></TextInput>
 
-      <Text>Confirm Password</Text>
+      <Text
+        style={{ alignSelf: "flex-start", marginLeft: 500, marginBottom: 5 }}
+      >
+        Confirm Password
+      </Text>
       <TextInput
         style={styles.textbox}
         placeholder="re-type password"
@@ -45,7 +61,12 @@ export default function CreateAcount() {
         onChangeText={setPassword}
       ></TextInput>
 
-      <Pressable style={styles.create_acc_button}>Create Account</Pressable>
+      <Pressable
+        style={styles.create_acc_button}
+        onPress={() => router.push("/homepage")}
+      >
+        Create Account
+      </Pressable>
     </View>
   );
 }
