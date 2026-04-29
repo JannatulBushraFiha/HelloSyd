@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "YourSydGuide",
-    "slug": "YourSydGuide",
+    "name": "HelloSYD",
+    "slug": "HelloSYD",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/helloSYD_icon2.png",
     "scheme": "yoursydguide",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -14,8 +14,8 @@
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/images/android-icon-foreground.png",
-        "backgroundImage": "./assets/images/android-icon-background.png",
+        "foregroundImage": "./assets/images/android-icon-foreground2.png",
+        "backgroundImage": "./assets/images/android-icon-background2.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
@@ -23,7 +23,7 @@
     },
     "web": {
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/aa.png"
     },
     "plugins": [
       "expo-router",
