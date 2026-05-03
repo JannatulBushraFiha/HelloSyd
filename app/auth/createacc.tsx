@@ -1,13 +1,27 @@
 import { useRouter } from "expo-router";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
-
+import { auth } from "../../root/firebaseConfig"; // adjust path
 export default function CreateAcount() {
   const [UserName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [cpassword, setCPassword] = useState("");
   const router = useRouter();
 
+  const handleCreateAccount = () => {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed up
+        console.log("Welcome, ", userCredential.user, "!");
+        router.push("/homepage");
+      })
+      .catch((error) => {
+        console.error("Error signing up: ", error.message);
+        alert(error.message);
+      });
+  };
   return (
     <View style={styles.container}>
       <Text>Create Account</Text>
@@ -57,14 +71,11 @@ export default function CreateAcount() {
         style={styles.textbox}
         placeholder="re-type password"
         secureTextEntry
-        value={password}
-        onChangeText={setPassword}
+        value={cpassword}
+        onChangeText={setCPassword}
       ></TextInput>
 
-      <Pressable
-        style={styles.create_acc_button}
-        onPress={() => router.push("/homepage")}
-      >
+      <Pressable style={styles.create_acc_button} onPress={handleCreateAccount}>
         Create Account
       </Pressable>
     </View>
