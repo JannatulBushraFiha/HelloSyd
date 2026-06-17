@@ -1,117 +1,155 @@
+// app/auth/createacc.tsx
 import { useRouter } from "expo-router";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
-import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
-import { auth } from "../../root/firebaseConfig"; // adjust path
-export default function CreateAcount() {
-  const [UserName, setUserName] = useState("");
+import {
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+} from "react-native";
+import { auth } from "../../root/firebaseConfig";
+
+export default function CreateAccount() {
+  const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [cpassword, setCPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const handleCreateAccount = () => {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed up
-        console.log("Welcome, ", userCredential.user, "!");
-        router.push("/homepage");
-      })
-      .catch((error) => {
-        console.error("Error signing up: ", error.message);
-        alert(error.message);
-      });
+  const handleCreateAccount = async () => {
+    if (!userName || !email || !password || !cpassword) {
+      Alert.alert("Missing fields", "Please fill in all fields.");
+      return;
+    }
+    if (password !== cpassword) {
+      Alert.alert("Password mismatch", "Passwords do not match.");
+      return;
+    }
+    if (password.length < 6) {
+      Alert.alert("Weak password", "Password must be at least 6 characters.");
+      return;
+    }
+    setLoading(true);
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      router.replace("/homepage");
+    } catch (error: any) {
+      Alert.alert("Sign up failed", error.message);
+    } finally {
+      setLoading(false);
+    }
   };
+
   return (
-    <View style={styles.container}>
-      <Text>Create Account</Text>
-      <Text
-        style={{ alignSelf: "flex-start", marginLeft: 500, marginBottom: 5 }}
-      >
-        Create UserName
-      </Text>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <Text style={styles.title}>Create Account</Text>
+      <Text style={styles.subtitle}>Join HelloSYD!</Text>
+
       <TextInput
         style={styles.textbox}
-        placeholder="User Name"
-        value={UserName}
+        placeholder="Username"
+        placeholderTextColor="#aaa"
+        value={userName}
         onChangeText={setUserName}
-      ></TextInput>
-
-      <Text
-        style={{ alignSelf: "flex-start", marginLeft: 500, marginBottom: 5 }}
-      >
-        Enter your email
-      </Text>
+        autoCapitalize="none"
+      />
       <TextInput
         style={styles.textbox}
         placeholder="Email"
+        placeholderTextColor="#aaa"
         value={email}
         onChangeText={setEmail}
-      ></TextInput>
-
-      <Text
-        style={{ alignSelf: "flex-start", marginLeft: 500, marginBottom: 5 }}
-      >
-        Create Password
-      </Text>
+        keyboardType="email-address"
+        autoCapitalize="none"
+      />
       <TextInput
         style={styles.textbox}
-        placeholder="password"
+        placeholder="Password"
+        placeholderTextColor="#aaa"
         secureTextEntry
         value={password}
         onChangeText={setPassword}
-      ></TextInput>
-
-      <Text
-        style={{ alignSelf: "flex-start", marginLeft: 500, marginBottom: 5 }}
-      >
-        Confirm Password
-      </Text>
+      />
       <TextInput
         style={styles.textbox}
-        placeholder="re-type password"
+        placeholder="Confirm Password"
+        placeholderTextColor="#aaa"
         secureTextEntry
         value={cpassword}
         onChangeText={setCPassword}
-      ></TextInput>
+      />
 
-      <Pressable style={styles.create_acc_button} onPress={handleCreateAccount}>
-        Create Account
+      <Pressable
+        style={[styles.button, loading && { opacity: 0.6 }]}
+        onPress={handleCreateAccount}
+        disabled={loading}
+      >
+        <Text style={styles.buttonText}>
+          {loading ? "Creating account..." : "Create Account"}
+        </Text>
       </Pressable>
-    </View>
+
+      <Pressable onPress={() => router.back()}>
+        <Text style={styles.link}>Already have an account? Login</Text>
+      </Pressable>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 2,
+    flex: 1,
     alignItems: "center",
+    justifyContent: "center",
     backgroundColor: "white",
+    paddingHorizontal: 24,
   },
-  text: {
-    color: "skyblue",
+  title: {
+    fontSize: 32,
+    fontWeight: "bold",
+    color: "rgb(93, 131, 181)",
+    marginBottom: 6,
+  },
+  subtitle: {
+    fontSize: 16,
+    color: "#888",
+    marginBottom: 30,
   },
   textbox: {
-    backgroundColor: "white",
-    padding: 12, // smaller padding so it doesn’t become tall
-    borderRadius: 20,
+    backgroundColor: "#f5f5f5",
+    padding: 14,
+    borderRadius: 12,
     borderColor: "skyblue",
-    borderWidth: 2,
-    width: "40%",
-    alignSelf: "center",
-    alignContent: "center",
-    marginBottom: 20, // ⭐ makes it long sideways
+    borderWidth: 1.5,
+    width: "100%",
+    marginBottom: 16,
+    fontSize: 16,
   },
-  create_acc_button: {
-    backgroundColor: "skyblue",
-    padding: 10,
-    borderRadius: 5,
+  button: {
+    backgroundColor: "rgb(93, 131, 181)",
+    padding: 14,
+    borderRadius: 12,
     alignItems: "center",
-    width: "20%",
-    marginBottom: 10,
+    width: "100%",
+    marginBottom: 16,
+    marginTop: 4,
   },
-  create_acc_link: {
+  buttonText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  link: {
     color: "skyblue",
     textDecorationLine: "underline",
+    fontSize: 15,
   },
 });
